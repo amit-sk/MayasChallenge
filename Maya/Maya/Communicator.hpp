@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include "Buffer.hpp"
 #include "TcpSocket.hpp"
 
 class Communicator

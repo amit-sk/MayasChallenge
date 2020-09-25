@@ -4,9 +4,8 @@
 #include <string>
 #include <vector>
 #include <WinSock2.h>
+#include "Buffer.hpp"
 #include "Socket.hpp"
-
-using Buffer = std::vector<uint8_t>;
 
 class TcpClientSocket : public Socket
 {

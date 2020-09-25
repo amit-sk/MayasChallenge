@@ -153,8 +153,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Buffer.hpp" />
     <ClInclude Include="Challenger.hpp" />
     <ClInclude Include="Communicator.hpp" />
+    <ClInclude Include="InitialVectorManager.hpp" />
+    <ClInclude Include="Modifiers.hpp" />
     <ClInclude Include="ProjectException.hpp" />
     <ClInclude Include="Socket.hpp" />
     <ClInclude Include="TcpSocket.hpp" />
@@ -162,8 +165,11 @@
     <ClInclude Include="WinSockUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
+    <ClCompile Include="InitialVectorManager.cpp" />
+    <ClCompile Include="Modifiers.cpp" />
     <ClCompile Include="ProjectException.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="TcpSocket.cpp" />

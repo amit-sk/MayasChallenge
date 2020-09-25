@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Buffer.hpp"
 #include "WinSockUtils.hpp"
 #include "Communicator.hpp"
 

@@ -12,19 +12,20 @@ Communicator::Communicator(std::string ip, uint32_t port) :
 Buffer Communicator::get_key_from_server()
 {
     Buffer inputted_key = s.recv(1024);
-    Buffer inputted_nibbles(inputted_key.size() * 2);
+    Buffer inputted_nibbles;
 
     for (const auto& byte : inputted_key)
     {
-        const auto& string_byte = std::to_string(byte);
+        const auto first_digit = byte / 10;
+        const auto second_digit = byte % 10;
 
-        if (string_byte.length() != 2 or (byte / 10) < 6)
+        if (first_digit > 9 or first_digit < 6)
         {
             throw ProjectException(ProjectStatus::NonAsciiCharacterInputted);
         }
 
-        inputted_nibbles.emplace_back(string_byte[0]);
-        inputted_nibbles.emplace_back(string_byte[1]);
+        inputted_nibbles.emplace_back(first_digit);
+        inputted_nibbles.emplace_back(second_digit);
     }
 
     return inputted_nibbles;
