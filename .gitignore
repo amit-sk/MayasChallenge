@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/Maya/Debug
+/Maya/.vs/Maya/v15
+/Maya/Maya/Debug
