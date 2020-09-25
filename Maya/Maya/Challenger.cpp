@@ -4,5 +4,5 @@
 
 Challenger::Challenger() :
     socket_enviroment(),
-    commander()
+    commander(server_ip, server_port)
 {}

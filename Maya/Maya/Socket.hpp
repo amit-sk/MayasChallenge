@@ -11,7 +11,7 @@ public:
 private:
     static SOCKET create_socket(int address_family, int socket_type);
 
-private:
+protected:
     SOCKET s;
 };
 

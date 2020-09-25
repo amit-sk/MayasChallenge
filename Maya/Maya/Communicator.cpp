@@ -2,8 +2,8 @@
 #include "Communicator.hpp"
 
 
-Communicator::Communicator(std::string _address, uint32_t _port) :
-    s()
+Communicator::Communicator(std::string ip, uint32_t port) :
+    s(ip, port)
 {}
 
 
