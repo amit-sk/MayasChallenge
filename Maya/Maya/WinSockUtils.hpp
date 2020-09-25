@@ -2,8 +2,10 @@
 class WinSockUtils
 {
 public:
-    WinSockUtils() = delete;
+    WinSockUtils();
+    virtual ~WinSockUtils();
 
+private:
     static void initialize_winsock();
 };
 

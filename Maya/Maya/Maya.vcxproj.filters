@@ -21,10 +21,13 @@
     <ClInclude Include="Communicator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileDescriptor.h">
+    <ClInclude Include="WinSockUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinSockUtils.hpp">
+    <ClInclude Include="TcpSocket.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Challenger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,10 +41,13 @@
     <ClCompile Include="Communicator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileDescriptor.cpp">
+    <ClCompile Include="WinSockUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinSockUtils.cpp">
+    <ClCompile Include="TcpSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Challenger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

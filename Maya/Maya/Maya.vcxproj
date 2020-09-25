@@ -151,14 +151,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Challenger.hpp" />
     <ClInclude Include="Communicator.hpp" />
-    <ClInclude Include="FileDescriptor.h" />
+    <ClInclude Include="TcpSocket.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="WinSockUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
-    <ClCompile Include="FileDescriptor.cpp" />
+    <ClCompile Include="TcpSocket.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
