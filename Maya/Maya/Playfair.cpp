@@ -1,258 +1,142 @@
-/************************************************************
-Program: Play Fair cypher encipher-decipher
-Author: Mujtaba Asif
-e-Mail: mjtbasif@gmail.com
-Date: 11/18/2017
-************************************************************/
-// *~~~~~~~~ header declaration ~~~~~~~~~~* //
-#include<bits/stdc++.h>
-using namespace std;
+#include "pch.h"
+#include <algorithm>
+#include <string>
+#include "Playfair.hpp"
 
-// *~~~~~~~~ variable declaration ~~~~~~~~~~* //
-char grid[5][5]; // 5x5  matrix to encipher or decipher
-char keyword[26]; // cypher key
-char msg[100]; // message
-int mark[130], len, r, c; // necessary variables
+Playfair::Playfair(const std::string& key) :
+    Playfair(key, true)
+{}
 
-// *~~~~~~~~~ Function declaration ~~~~~~~~~~~* //
-void createGrid();
-void showGrid();
-void encipher();
-void decipher();
-void initialize();
-void menu()
+Playfair::Playfair(const std::string& key, bool replaceJI)
+    : replaceJI(replaceJI)
 {
-    system("CLS");
-    int n;
-    string op[] = { "1. Encipher","2. Decipher","3. Exit" };
-    cout << op[0] << endl << op[1] << endl << op[2] << endl << "Enter choice: ";
-    cin >> n;
-    if (n == 1) encipher();
-    else if (n == 2) decipher();
-    else exit(1);
+    std::string keyUp(key);
+    std::transform(keyUp.begin(), keyUp.end(), keyUp.begin(), ::toupper);
+
+    if (keyUp.length() < 1)
+        keyUp = "KEYWORD";
+    keyUp += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    std::string fixedKey = "";
+    for (std::string::iterator it = keyUp.begin(); it != keyUp.end(); ++it) {
+        if (*it < 65 || *it > 90)
+            continue;
+        if ((*it == 'J' && replaceJI) || (*it == 'Q' && !replaceJI))
+            continue;
+        if (fixedKey.find(*it) == -1)
+            fixedKey += *it;
+    }
+    std::copy(fixedKey.begin(), fixedKey.end(), &table[0][0]);
 }
-void initialize()
-{
-    memset(mark, 0, sizeof(mark));
-    system("CLS");
-}
-int main()
-{
-    menu();
-    return 0;
-}
-void decipher()
-{
-    initialize();
-    createGrid();
-    cout << "Cypher text: ";
-    char cypText[150]; // cypher text
-    cin >> cypText;
-    getchar(); // flush buffer
-    int l = strlen(cypText); //take length
 
-    /*
-    for(int i=0;i<l;i+=2)
-        cout<<cypText[i]<<cypText[i+1]<<" ";
-    cout<<endl;
-    */
+std::string Playfair::encrypt(const std::string& message)
+{
+    return excrypt(message, true);
+}
 
-    cout << "Decipher text: ";
-    //decipher starts
-    int P, Q, R, S, f1, f2;
-    char x, y;
-    for (int i = 0; i < l; i += 2)
+std::string Playfair::decrypt(const std::string& message)
+{
+    return excrypt(message, false);
+}
+
+std::string Playfair::excrypt(const std::string& message, bool isEncrypt)
+{
+    std::string fixedMessage = fixText(message, isEncrypt);
+
+    int j, k, p, q;
+    const int direction = isEncrypt ? 1 : -1;
+    // CR: (GB) use string builder..
+    std::string newMessage;
+    for (std::string::const_iterator it = fixedMessage.begin(); it != fixedMessage.end(); ++it)
     {
-        x = cypText[i];
-        y = cypText[i + 1];
-        f1 = f2 = 0;
-        for (int j = 0; j < 5; j++)
+        if (getPos(*it++, j, k) && getPos(*it, p, q))
         {
-            for (int k = 0; k < 5; k++)
+            //for same row
+            if (j == p)
             {
-                if (x == grid[j][k])
-                {
-                    P = j;
-                    Q = k;
-                    f1 = 1;
-                }
-                if (y == grid[j][k])
-                {
-                    R = j;
-                    S = k;
-                    f2 = 1;
-                }
-                if (f1 && f2) break;
+                newMessage += getChar(j, k + direction);
+                newMessage += getChar(p, q + direction);
             }
-            if (f1 && f2) break;
-        }
-        if (P == R) //same row
-        {
-            if (Q == 0) cout << grid[P][4];
-            else cout << grid[P][Q - 1];
-            if (S == 0) cout << grid[R][4];
-            else cout << grid[R][S - 1];
-        }
-        else if (Q == S) // same column
-        {
-            if (P == 0) cout << grid[4][Q];
-            else cout << grid[P - 1][Q];
-            if (R == 0) cout << grid[4][S];
-            else cout << grid[R - 1][S];
-        }
-        else //opposite corner
-        {
-            cout << grid[P][S] << grid[R][Q];
-        }
-    }
-    cout << endl << endl;
-    system("PAUSE");
-    menu();
-}
-void encipher()
-{
-    initialize();
-    createGrid();
-    cout << "Message to cypher: ";
-    gets(msg);
-    int l = strlen(msg); // msg length
-    char reqText[150]; //generate required text to encipher
-    int in = 0, j = 0;
-    for (int i = 0; i < l; i++)
-    {
-        j = i + 1;
-        if (msg[i] == ' ') //ignore all space from string
-        {
-            i++;
-            j++;
-        }
-        if (msg[j] == ' ') j++; //ignore space
-        if (toupper(msg[i]) == 'J') msg[i] = 'i'; // ignore J
-        if (toupper(msg[i]) == toupper(msg[j])) // if duplicate add 'X' after the first letter
-        {
-            reqText[in] = toupper(msg[i]);
-            reqText[in + 1] = 'X';
-            in++;
-        }
-        else
-        {
-            reqText[in] = toupper(msg[i]);
-        }
-        in++;
-    }
-    if (in % 2 != 0) reqText[in] = 'X'; // if one character left, add 'X' after it
-
-    /*
-    //show generated text in pair
-    for(int i=0;i<in;i+=2)
-        cout<<reqText[i]<<reqText[i+1]<<" ";
-    cout<<endl;
-    */
-
-    cout << "Cypher text: ";
-    //encipher starts
-    int P, Q, R, S, f1, f2;
-    char x, y;
-    for (int i = 0; i < in; i += 2)
-    {
-        x = reqText[i];
-        y = reqText[i + 1];
-        f1 = f2 = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            for (int k = 0; k < 5; k++)
-            {
-                if (x == grid[j][k])
-                {
-                    P = j;
-                    Q = k;
-                    f1 = 1;
-                }
-                if (y == grid[j][k])
-                {
-                    R = j;
-                    S = k;
-                    f2 = 1;
-                }
-                if (f1 && f2) break;
+                //for same column
+            else if (k == q) {
+                newMessage += getChar(j + direction, k);
+                newMessage += getChar(p + direction, q);
             }
-            if (f1 && f2) break;
-        }
-        if (P == R) //same row
-        {
-            if (Q == 4) cout << grid[P][0];
-            else cout << grid[P][Q + 1];
-            if (S == 4) cout << grid[R][0];
-            else cout << grid[R][S + 1];
-        }
-        else if (Q == S) // same column
-        {
-            if (P == 4) cout << grid[0][Q];
-            else cout << grid[P + 1][Q];
-            if (R == 4) cout << grid[0][S];
-            else cout << grid[R + 1][S];
-        }
-        else //opposite corner
-        {
-            cout << grid[P][S] << grid[R][Q];
-        }
-    }
-    cout << endl << endl;
-    system("PAUSE");
-    menu();
-}
-void createGrid()
-{
-    cout << "Keyword: ";
-    cin >> keyword; // key of the cypher
-    getchar();
-    len = strlen(keyword);  // size of input string O(n) :3
-    mark['J'] = 1; // ignore J
-    r = 0, c = 0; //initialize row and column
-
-    // first populate the keyword
-    for (int i = 0; i < len; i++)
-    {
-        if (!mark[toupper(keyword[i])]) // ignore duplicates
-        {
-            mark[toupper(keyword[i])] = 1;
-            grid[r][c++] = toupper(keyword[i]);
-            if (c % 5 == 0) //increase row column
-            {
-                c = 0;
-                r++;
+            else {
+                newMessage += getChar(p, k);
+                newMessage += getChar(j, q);
             }
         }
     }
+    return newMessage;
+}
 
-    // complete rest of the matrix from unused characters starting from A
-    for (int i = 'A'; i <= 'Z'; i++)
+std::string Playfair::fixText(const std::string& text, bool shouldEncrypt) const
+{
+    std::string fixedText;
+
+    for (std::string::const_iterator it = text.begin(); it != text.end(); ++it)
     {
-        if (mark[i] == 0) // taking values that are not in the matrix already
+        //to choose J = I or no Q in the alphabet.
+        char letter = *it;
+        if (letter >= 'a' && letter <= 'z')
+            letter += 'A' - 'a';
+        if (letter < 'A' || letter > 'Z')
+            continue;
+        if (letter == 'J' && replaceJI)
+            letter = 'I';
+        else if (letter == 'Q' && !replaceJI)
+            continue;
+        fixedText += letter;
+    }
+    if (shouldEncrypt)
+    {
+        std::string nmsg = "";
+        for (int x = 0; x < fixedText.length(); x += 2)
         {
-            grid[r][c++] = i;
-            mark[i] = 1;
-            if (c % 5 == 0)
+            nmsg += fixedText[x];
+            if (x < fixedText.length() - 1)
             {
-                if (r == 4 && c == 5) break; //matrix populated
-
-                // else increase row column
-                r++;
-                c = 0;
+                if (fixedText[x] == fixedText[x + 1])
+                {
+                    nmsg += 'X';
+                }
+                nmsg += fixedText[x + 1];
             }
         }
+        fixedText = nmsg;
     }
-}
-void showGrid()
-{
-    cout << "5x5 Matrix" << endl;
-    //show grid
-    for (int i = 0; i < 5; i++)
+
+    if (fixedText.length() & 1)
     {
-        for (int j = 0; j < 5; j++)
-        {
-            cout << grid[i][j] << " ";
-        }
-        cout << endl;
+        fixedText += 'X';
     }
+
+    return fixedText;
+}
+
+char Playfair::getChar(int a, int b)
+{
+    return table[(b + 5) % 5][(a + 5) % 5];
+}
+
+bool Playfair::getPos(char l, int& c, int& d)
+{
+    for (int y = 0; y < 5; y++)
+    {
+        for (int x = 0; x < 5; x++)
+        {
+            if (table[y][x] != l)
+            {
+                continue;
+            }
+
+            c = x;
+            d = y;
+
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -95,6 +95,7 @@
     <ClInclude Include="AES.hpp" />
     <ClInclude Include="Challenger.hpp" />
     <ClInclude Include="Communicator.hpp" />
+    <ClInclude Include="Playfair.hpp" />
     <ClInclude Include="ProjectException.hpp" />
     <ClInclude Include="Socket.hpp" />
     <ClInclude Include="TcpSocket.hpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="AES.cpp" />
     <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
+    <ClCompile Include="Playfair.cpp" />
     <ClCompile Include="ProjectException.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="TcpSocket.cpp" />
