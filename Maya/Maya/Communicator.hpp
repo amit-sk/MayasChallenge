@@ -9,9 +9,9 @@ class Communicator
 {
 public:
     Communicator(std::string, uint32_t);
-    virtual ~Communicator();
+    virtual ~Communicator() = default;
 
-    std::vector<uint8_t> get_password();
+    Buffer get_password();
 
 private:
     TcpClientSocket s;

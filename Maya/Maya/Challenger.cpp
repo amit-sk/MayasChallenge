@@ -4,5 +4,10 @@
 
 Challenger::Challenger() :
     socket_enviroment(),
-    commander(server_ip, server_port)
+    communicator(server_ip, server_port)
 {}
+
+void Challenger::run_challenge()
+{
+    communicator.get_password();
+}

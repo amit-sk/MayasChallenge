@@ -7,6 +7,8 @@ Communicator::Communicator(std::string ip, uint32_t port) :
 {}
 
 
-Communicator::~Communicator()
+Buffer Communicator::get_password()
 {
+    Buffer pass = s.recv(1024);
+    return pass;
 }

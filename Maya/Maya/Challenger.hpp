@@ -12,8 +12,10 @@ public:
     Challenger();
     virtual ~Challenger() = default;
 
+    void run_challenge();
+
 private:
     const WinSockUtils socket_enviroment;
-    Communicator commander;
+    Communicator communicator;
 };
 

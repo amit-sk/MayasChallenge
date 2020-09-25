@@ -1,7 +1,10 @@
 #include "pch.h"
 #include <WinSock2.h>
 #include <ws2tcpip.h>
-#include <iostream>
+#include <stdio.h>
+#include <stdexcept>
+#include <array>
+#include <iostream> // TODO remove
 #include "TcpSocket.hpp"
 
 
@@ -22,10 +25,24 @@ void TcpClientSocket::connect_to_server(const std::string& ip, uint32_t port)
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(port);
 
-    if (connect(s, (sockaddr *)(&server_address), sizeof(server_address)) < 0)
+    if (connect(s, reinterpret_cast<sockaddr *>(&server_address), sizeof(server_address)) < 0)
     {
         throw std::system_error(std::error_code(errno, std::system_category()), "Failed to connect.");
     }
 
+    // TODO remove
     std::cout << "Connected" << std::endl;
+}
+
+Buffer TcpClientSocket::recv(size_t size)
+{
+    Buffer reply(size);
+
+    size_t recv_size = ::recv(s, reinterpret_cast<char*>(reply.data()), reply.size(), 0);
+    if (recv_size == SOCKET_ERROR)
+    {
+        throw std::system_error(std::error_code(errno, std::system_category()), "Failed to recv from socket.");
+    }
+
+    return reply;
 }
