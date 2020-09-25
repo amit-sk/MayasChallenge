@@ -43,6 +43,7 @@ Buffer TcpClientSocket::recv(size_t size)
     {
         throw std::system_error(std::error_code(errno, std::system_category()), "Failed to recv from socket.");
     }
+    reply.resize(recv_size);
 
     return reply;
 }

@@ -2,19 +2,20 @@
 
 #include <cstdint>
 #include <string>
-#include <exception>
+#include <type_traits>
 
 enum class ProjectStatus : uint32_t
 {
     Success = 0,
     StandardExceptionThrown,
     UnknownExceptionThrown,
+    NonAsciiCharacterInputted,
 };
 
-class ProjectException : public std::exception
+class ProjectException
 {
 public:
-    ProjectException(ProjectStatus _status) : 
+    explicit ProjectException(ProjectStatus _status) : 
         status(_status)
     {}
 
