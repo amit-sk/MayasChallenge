@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <cstring>
+#include <exception>
 #include <cstdio>
 #include "AES.hpp"
 
@@ -20,7 +21,7 @@ AES::AES(int keyLen)
         this->Nr = 14;
         break;
     default:
-        throw "Incorrect key length";
+        throw std::exception("Incorrect key length");
     }
 
     blockBytesLen = 4 * this->Nb * sizeof(unsigned char);
