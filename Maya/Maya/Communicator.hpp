@@ -11,7 +11,7 @@ public:
     Communicator(std::string, uint32_t);
     virtual ~Communicator() = default;
 
-    Buffer get_password();
+    Buffer get_key_from_server();
 
 private:
     TcpClientSocket s;

@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Challenger.hpp" />
     <ClInclude Include="Communicator.hpp" />
+    <ClInclude Include="ProjectException.hpp" />
     <ClInclude Include="Socket.hpp" />
     <ClInclude Include="TcpSocket.hpp" />
     <ClInclude Include="pch.h" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
+    <ClCompile Include="ProjectException.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="TcpSocket.cpp" />
     <ClCompile Include="main.cpp" />

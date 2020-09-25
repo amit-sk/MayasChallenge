@@ -9,5 +9,5 @@ Challenger::Challenger() :
 
 void Challenger::run_challenge()
 {
-    communicator.get_password();
+    communicator.get_key_from_server();
 }
