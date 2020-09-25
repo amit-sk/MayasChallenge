@@ -10,6 +10,11 @@ enum class ProjectStatus : uint32_t
     StandardExceptionThrown,
     UnknownExceptionThrown,
     NonAsciiCharacterInputted,
+    InitialVectorModifier_3_CheckFailed,
+    InitialVectorModifier_5_CheckFailed,
+    InitialVectorModifier_6_CheckFailed,
+    InitialVectorModifier_7_CheckFailed,
+    InitialVectorModifier_8_CheckFailed,
 };
 
 class ProjectException

@@ -12,7 +12,7 @@ Communicator::Communicator(std::string ip, uint32_t port) :
 Buffer Communicator::get_key_from_server()
 {
     Buffer inputted_key = s.recv(1024);
-    Buffer inputted_nibbles;
+    Buffer inputted_digits;
 
     for (const auto& byte : inputted_key)
     {
@@ -24,9 +24,9 @@ Buffer Communicator::get_key_from_server()
             throw ProjectException(ProjectStatus::NonAsciiCharacterInputted);
         }
 
-        inputted_nibbles.emplace_back(first_digit);
-        inputted_nibbles.emplace_back(second_digit);
+        inputted_digits.emplace_back(first_digit);
+        inputted_digits.emplace_back(second_digit);
     }
 
-    return inputted_nibbles;
+    return inputted_digits;
 }

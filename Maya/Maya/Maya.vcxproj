@@ -167,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AES.cpp" />
-    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="InitialVectorManager.cpp" />

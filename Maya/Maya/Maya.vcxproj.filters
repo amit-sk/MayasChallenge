@@ -77,9 +77,6 @@
     <ClCompile Include="InitialVectorManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Modifiers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
