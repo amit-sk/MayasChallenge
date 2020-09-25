@@ -1,17 +1,12 @@
 #pragma once
 
 #include <WinSock2.h>
+#include "Socket.hpp"
 
-class TcpSocket
+class TcpSocket : public Socket
 {
 public:
-    explicit TcpSocket();
+    TcpSocket();
     virtual ~TcpSocket();
-
-private:
-    static SOCKET create_socket();
-
-private:
-    SOCKET s;
 };
 
