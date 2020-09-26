@@ -118,7 +118,6 @@
     <ClCompile Include="InitialVectorManager.cpp" />
     <ClCompile Include="Modifiers.cpp" />
     <ClCompile Include="Playfair.cpp" />
-    <ClCompile Include="ProjectException.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="TcpSocket.cpp" />
     <ClCompile Include="main.cpp" />

@@ -38,9 +38,10 @@ void Challenger::execute_digits(const Buffer& key_digits)
             uint8_t second_digit = key_digits.at(i + 1);
             uint8_t entire_byte = (first_digit * 10) + second_digit;
 
+            std::cout << directioning_strings_decryptor.encrypt_directioning_string(i/2, entire_byte) << std::endl; // TODO remove
             std::cout << directioning_strings_decryptor.decrypt_directioning_string(i/2, entire_byte) << std::endl;
-            iv_manager.modify_iv(first_digit);
-            iv_manager.modify_iv(second_digit);
+            //iv_manager.modify_iv(first_digit);
+            //iv_manager.modify_iv(second_digit);
         }
     }
     catch (const Halt& _)

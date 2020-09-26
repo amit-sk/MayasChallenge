@@ -4,7 +4,7 @@
 #include "Playfair.hpp"
 
 Playfair::Playfair(const std::string& key) :
-    Playfair(key, true, DEFAULT_ODD_SUFFIX_LETTER, false, true)
+    Playfair(key, false, DEFAULT_ODD_SUFFIX_LETTER, false, true)
 {}
 
 Playfair::Playfair(const std::string& key, bool replaceJI, char oddSuffixLetter, bool keepDoubleLetters, bool keepSpecialChars) :
@@ -48,21 +48,21 @@ std::string Playfair::excrypt(const std::string& message, bool isEncrypt)
     std::string fixedMessage = fixText(message, isEncrypt);
 
     int j, k, p, q;
-    bool usePrevious = true;
+    bool skipPrevious = false;
     const int direction = isEncrypt ? 1 : -1;
     // CR: (GB) use string builder..
     std::string newMessage;
     for (std::string::const_iterator it = fixedMessage.begin(); it != fixedMessage.end(); ++it)
     {
-        if (!usePrevious)
+        if (!skipPrevious)
         {
             const char previous = *it;
             if (!getPos(previous, j, k))
             {
-                usePrevious = true;
                 newMessage += previous;
                 continue;
             }
+            skipPrevious = true;
             ++it;
         }
 
@@ -73,7 +73,7 @@ std::string Playfair::excrypt(const std::string& message, bool isEncrypt)
             continue;
         }
 
-        usePrevious = false;
+        skipPrevious = false;
 
         //for same row
         if (j == p)
