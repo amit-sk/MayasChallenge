@@ -52,6 +52,12 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>mayas_challenge</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>mayas_challenge</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -97,7 +103,6 @@
     <ClInclude Include="Challenger.hpp" />
     <ClInclude Include="Communicator.hpp" />
     <ClInclude Include="Decryptor.hpp" />
-    <ClInclude Include="DirectioningStringsDecryptor.hpp" />
     <ClInclude Include="File.hpp" />
     <ClInclude Include="InitialVectorManager.hpp" />
     <ClInclude Include="Modifiers.hpp" />
@@ -113,7 +118,6 @@
     <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="Decryptor.cpp" />
-    <ClCompile Include="DirectioningStringsDecryptor.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="InitialVectorManager.cpp" />
     <ClCompile Include="Modifiers.cpp" />

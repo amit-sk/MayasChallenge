@@ -5,13 +5,12 @@
 #include "Communicator.hpp"
 #include "InitialVectorManager.hpp"
 #include "Decryptor.hpp"
-#include "DirectioningStringsDecryptor.hpp"
 
 class Challenger
 {
 private:
-    static constexpr char SERVER_IP[] = "127.0.0.1"; // TODO change address
-    static constexpr uint32_t SERVER_PORT = 12345;
+    static constexpr char SERVER_IP[] = "127.0.0.1";//"80.73.78.75";
+    static constexpr uint32_t SERVER_PORT = 26999;
 
 public:
     Challenger();
@@ -27,6 +26,5 @@ private:
     Communicator communicator;
     InitialVectorManager iv_manager;
     MessageDecryptor message_decryptor;
-    DirectioningStringsDecryptor directioning_strings_decryptor;
 };
 
