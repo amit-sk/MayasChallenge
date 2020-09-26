@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <cstring>
 #include "Decryptor.hpp"
 
 
@@ -19,18 +20,16 @@ Buffer MessageDecryptor::decrypt_message(InitialVectorType& iv, Buffer& key)
     std::array<unsigned char, 16> used_key;
     used_key.fill(0);
 
-    memcpy(used_key.data(), key.data(), std::min<size_t>(used_key.size(), key.size()));
+    std::memcpy(used_key.data(), key.data(), std::min<size_t>(used_key.size(), key.size()));
 
     return decrypt_message(encrypted_message, iv, used_key);
 }
 
 Buffer MessageDecryptor::decrypt_message(Buffer& message, InitialVectorType& iv, std::array<unsigned char, 16>& key)
 {
-    size_t decrypted_messsage_len = 0;
-    const auto& decrypted_messsage_buffer = decryptor.EncryptCBC(reinterpret_cast<unsigned char*>(message.data()),
+    const auto& decrypted_messsage_buffer = decryptor.DecryptCBC(reinterpret_cast<unsigned char*>(message.data()),
                                                                  message.size(),
                                                                  key.data(),
-                                                                 reinterpret_cast<unsigned char*>(iv.data()),
-                                                                 decrypted_messsage_len);
-    //Buffer decrypted_message(decrypted_messsage_len, reinterpret_cast<const uint8_t*>(decrypted_messsage_buffer));
+                                                                 reinterpret_cast<unsigned char*>(iv.data()));
+    return Buffer(decrypted_messsage_buffer, decrypted_messsage_buffer + message.size());
 }

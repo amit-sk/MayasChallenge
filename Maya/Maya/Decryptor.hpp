@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+#include <array>
 #include "Buffer.hpp"
 #include "File.hpp"
 #include "AES.hpp"

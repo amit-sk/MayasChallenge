@@ -3,7 +3,7 @@
 #include "AES.hpp"
 #include "Challenger.hpp"
 
-#include <libloaderapi.h>
+#include <fstream>
 
 
 Challenger::Challenger() :
@@ -19,5 +19,8 @@ void Challenger::run_challenge()
     iv_manager.modify_iv(key_digits);
     InitialVectorType iv = iv_manager.get_initial_vector();
 
-    auto b = decryptor.decrypt_message(iv, key_digits);
+    Buffer decrypted_message = decryptor.decrypt_message(iv, key_digits);
+
+    std::ofstream f("Message1.txt", std::ios::binary);
+    f.write(reinterpret_cast<char*>(decrypted_message.data()), decrypted_message.size());
 }
