@@ -10,8 +10,8 @@
 class Challenger
 {
 private:
-    static constexpr char SERVER_IP[] = "80.73.78.75";
-    static constexpr uint32_t SERVER_PORT = 26999;
+    static constexpr char SERVER_IP[] = "127.0.0.1"; // TODO change address
+    static constexpr uint32_t SERVER_PORT = 12345;
 
 public:
     Challenger();
