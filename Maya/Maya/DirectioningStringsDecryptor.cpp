@@ -10,15 +10,15 @@ DirectioningStringsDecryptor::DirectioningStringsDecryptor() :
 std::vector<std::string> DirectioningStringsDecryptor::get_directioning_strings()
 {
     return {
-        "It’s Maya’s birthday!",
+        "It's Maya's birthday!",
         "Maya gets drunk really easily",
         "Her sense of smell is her secret super power",
         "Recipe repertoire: mujadara and muffins. What else does a girl need?",
         "Have you ever seen an IDA so pink?",
         "Maya used to cut her own hair",
         "Maya loves animals",
-        "I didn’t even know you can change the colorscheme in sublime",
-        "Maya doesn’t have a very extensive taste in music",
+        "I didn't even know you can change the colorscheme in sublime",
+        "Maya doesn't have a very extensive taste in music",
         "He found the end of the rainbow",
         "My dentist tells me that chewing bricks is very bad for your teeth.",
         "It doesn't sound like that will ever be on my travel list.",

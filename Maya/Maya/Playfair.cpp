@@ -50,6 +50,7 @@ std::string Playfair::excrypt(const std::string& message, bool isEncrypt)
     int j, k, p, q;
     bool skipPrevious = false;
     const int direction = isEncrypt ? 1 : -1;
+    std::string temp;
     // CR: (GB) use string builder..
     std::string newMessage;
     for (std::string::const_iterator it = fixedMessage.begin(); it != fixedMessage.end(); ++it)
@@ -59,37 +60,60 @@ std::string Playfair::excrypt(const std::string& message, bool isEncrypt)
             const char previous = *it;
             if (!getPos(previous, j, k))
             {
+                newMessage += temp;
                 newMessage += previous;
+                temp = "";
                 continue;
             }
             skipPrevious = true;
             ++it;
         }
 
+        if (it == fixedMessage.end())
+        {
+            newMessage += getChar(j, k);
+            newMessage += temp;
+            skipPrevious = false;
+            break;
+        }
+
         const char current = *it;
         if (!getPos(current, p, q))
         {
-            newMessage += current;
+            temp += current;
             continue;
         }
 
         skipPrevious = false;
 
         //for same row
+        int a1 = p, a2 = j, b1 = k, b2 = q;
         if (j == p)
         {
-            newMessage += getChar(j, k + direction);
-            newMessage += getChar(p, q + direction);
+            a1 = j;
+            b1 = k + direction;
+            a2 = p;
+            b2 = q + direction;
         }
         //for same column
         else if (k == q) {
-            newMessage += getChar(j + direction, k);
-            newMessage += getChar(p + direction, q);
+            a1 = j + direction;
+            b1 = k;
+            a2 = p + direction;
+            b2 = q;
         }
-        else {
-            newMessage += getChar(p, k);
-            newMessage += getChar(j, q);
-        }
+
+        newMessage += getChar(a1, b1);
+        newMessage += temp;
+        newMessage += getChar(a2, b2);
+
+        temp = "";
+    }
+
+    if (skipPrevious)
+    {
+        newMessage += getChar(j, k);
+        newMessage += temp;
     }
 
     return newMessage;
