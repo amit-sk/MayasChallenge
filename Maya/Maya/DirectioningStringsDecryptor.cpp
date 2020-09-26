@@ -10,38 +10,30 @@ DirectioningStringsDecryptor::DirectioningStringsDecryptor() :
 std::vector<std::string> DirectioningStringsDecryptor::get_directioning_strings()
 {
     return {
-        "It's Maya's birthday!",
-        "Maya gets drunk really easily",
-        "Her sense of smell is her secret super power",
-        "Recipe repertoire: mujadara and muffins. What else does a girl need?",
-        "Have you ever seen an IDA so pink?",
-        "Maya used to cut her own hair",
-        "Maya loves animals",
-        "I didn't even know you can change the colorscheme in sublime",
-        "Maya doesn't have a very extensive taste in music",
-        "He found the end of the rainbow",
-        "My dentist tells me that chewing bricks is very bad for your teeth.",
-        "It doesn't sound like that will ever be on my travel list.",
-        "The snow-covered path",
-        "She always speaks to him in a loud voice",
-        "Sometimes I stare at a door or a wall",
-        "The fox in the tophat whispered into the ear of the rabbit.",
-        "It had been sixteen days since the zombies first attacked.",
-        "After exploring the abandoned building, he started to believe in ghosts.",
-        "His immense laziness was inspirational to others",
+        "NY'X SDVC'P DGSUICDV!",
+        "KCVD JBUT BTTOL PABRRZ DCPGNY",
+        "JCS TDOUC KJ XSBON GX MBU UCBSDU TPUAS RLZBU",
+        "UBDHUA UBUASUNJUB: OSFEEBPB DKC NPJGJMT. XGDP BOUC ENCU B FGTM OJJD?",
+        "FCZA ZNZ JZAS TJJK DT NEB UM TFOL?",
+        "KCVD PTAE UN ESS IBU LZM IDFR",
+        "KCVD MKZAP CTNKCMR",
+        "N INIT'Y AZDO LOLZ ZNS EDK HMDKJB SIA DKMLUXHJCOC NT TPGRHNE",
+        "KCVD ENCUT'Y FCZA F ABUZ DYSDOTHZA PDTUD JO NPTHD",
+        "JC JKTOI YJC DOE NI PJC PBNTELW",
+        "NX EATYHTY YBOMR OC SIDP HMBZNTL GTGAMT HP XBUW DBE JKT WUZS UJJSI.",
+        "NY ENCUT'Y UMTOB NFND UFCR YGNO BZAW GJ UO ND YPBZAR RHTT.",
+        "SIC UOKX-BKZBUAE VFSI",
+        "XMA BRBDVX XUAFPT UM JHN NT B KUZA YNJDA",
+        "UMOCYNOCT H TUBPA BP D ENLU LU B VBKL",
+        "SIA JMZ NT SID UKUFCR YIJTRBUAE NTUN SIJ JBP KJ SIB UBCDGT.",
+        "NY FCE CJJM THYUDDO EBXT THMDD UJC EULCJDP HGTTU DPPDAMAE.",
+        "FKUDU BVSMKTGLI SIA BCBTIKOAE ERGNINLI, JC TUBPUDI YL EBOJDZA NT HIMUUT.",
+        "IJT HSSDOUC KBYJODXX VBT HMTTFPBYNKOBK UN NUJCST",
     };
 }
 
-std::string DirectioningStringsDecryptor::encrypt_directioning_string(size_t index, uint8_t key)// const
+std::string DirectioningStringsDecryptor::decrypt_directioning_string(size_t index, uint8_t key) const
 {
     Playfair decryptor(std::to_string(key));
-    directioning_strings.at(index) = decryptor.encrypt(directioning_strings.at(index));
-    return directioning_strings.at(index);
-}
-
-std::string DirectioningStringsDecryptor::decrypt_directioning_string(size_t index, uint8_t key)// const
-{
-    Playfair decryptor(std::to_string(key));
-    directioning_strings.at(index) = decryptor.decrypt(directioning_strings.at(index)); // TODO don't subsitute the string, just return it
-    return directioning_strings.at(index);
+    return decryptor.decrypt(directioning_strings.at(index % directioning_strings.size()));
 }
