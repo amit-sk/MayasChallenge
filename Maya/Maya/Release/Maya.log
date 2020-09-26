@@ -1,0 +1,6 @@
+﻿  Challenger.cpp
+c:\projects\mayaschallenge\maya\maya\challenger.cpp(46): warning C4101: '_': unreferenced local variable
+  main.cpp
+  WinSockUtils.cpp
+  Generating Code...
+  Maya.vcxproj -> C:\Projects\MayasChallenge\Maya\Release\Maya.exe
