@@ -4,11 +4,15 @@
 #include "Playfair.hpp"
 
 Playfair::Playfair(const std::string& key) :
-    Playfair(key, true)
+    Playfair(key, true, DEFAULT_ODD_SUFFIX_LETTER, false, true)
 {}
 
-Playfair::Playfair(const std::string& key, bool replaceJI)
-    : replaceJI(replaceJI)
+Playfair::Playfair(const std::string& key, bool replaceJI, char oddSuffixLetter, bool keepDoubleLetters, bool keepSpecialChars) :
+    replaceJI(replaceJI),
+    keepDoubleLetters(keepDoubleLetters),
+    oddSuffixLetter(oddSuffixLetter),
+    keepSpecialChars(keepSpecialChars),
+    table()
 {
     std::string keyUp(key);
     std::transform(keyUp.begin(), keyUp.end(), keyUp.begin(), ::toupper);
@@ -44,30 +48,50 @@ std::string Playfair::excrypt(const std::string& message, bool isEncrypt)
     std::string fixedMessage = fixText(message, isEncrypt);
 
     int j, k, p, q;
+    bool usePrevious = true;
     const int direction = isEncrypt ? 1 : -1;
     // CR: (GB) use string builder..
     std::string newMessage;
     for (std::string::const_iterator it = fixedMessage.begin(); it != fixedMessage.end(); ++it)
     {
-        if (getPos(*it++, j, k) && getPos(*it, p, q))
+        if (!usePrevious)
         {
-            //for same row
-            if (j == p)
+            const char previous = *it;
+            if (!getPos(previous, j, k))
             {
-                newMessage += getChar(j, k + direction);
-                newMessage += getChar(p, q + direction);
+                usePrevious = true;
+                newMessage += previous;
+                continue;
             }
-                //for same column
-            else if (k == q) {
-                newMessage += getChar(j + direction, k);
-                newMessage += getChar(p + direction, q);
-            }
-            else {
-                newMessage += getChar(p, k);
-                newMessage += getChar(j, q);
-            }
+            ++it;
+        }
+
+        const char current = *it;
+        if (!getPos(current, p, q))
+        {
+            newMessage += current;
+            continue;
+        }
+
+        usePrevious = false;
+
+        //for same row
+        if (j == p)
+        {
+            newMessage += getChar(j, k + direction);
+            newMessage += getChar(p, q + direction);
+        }
+        //for same column
+        else if (k == q) {
+            newMessage += getChar(j + direction, k);
+            newMessage += getChar(p + direction, q);
+        }
+        else {
+            newMessage += getChar(p, k);
+            newMessage += getChar(j, q);
         }
     }
+
     return newMessage;
 }
 
@@ -81,14 +105,24 @@ std::string Playfair::fixText(const std::string& text, bool shouldEncrypt) const
         char letter = *it;
         if (letter >= 'a' && letter <= 'z')
             letter += 'A' - 'a';
+
         if (letter < 'A' || letter > 'Z')
+        {
+            if (!keepSpecialChars)
+            {
+                continue;
+            }
+            fixedText += letter;
             continue;
+        }
+
         if (letter == 'J' && replaceJI)
             letter = 'I';
         else if (letter == 'Q' && !replaceJI)
             continue;
         fixedText += letter;
     }
+
     if (shouldEncrypt)
     {
         std::string nmsg = "";
@@ -97,7 +131,7 @@ std::string Playfair::fixText(const std::string& text, bool shouldEncrypt) const
             nmsg += fixedText[x];
             if (x < fixedText.length() - 1)
             {
-                if (fixedText[x] == fixedText[x + 1])
+                if (keepDoubleLetters && fixedText[x] == fixedText[x + 1])
                 {
                     nmsg += 'X';
                 }
@@ -109,7 +143,7 @@ std::string Playfair::fixText(const std::string& text, bool shouldEncrypt) const
 
     if (fixedText.length() & 1)
     {
-        fixedText += 'X';
+        fixedText += oddSuffixLetter;
     }
 
     return fixedText;

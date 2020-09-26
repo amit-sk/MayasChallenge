@@ -6,9 +6,12 @@
 class Playfair final
 {
 public:
+    static const char DEFAULT_ODD_SUFFIX_LETTER = ' ';
+
+public:
     Playfair() = delete;
     explicit Playfair(const std::string& key);
-    Playfair(const std::string& key, bool replaceJI);
+    Playfair(const std::string& key, bool replaceJI, char oddSuffixLetter, bool keepDoubleLetters, bool keepSpecialChars);
     ~Playfair() = default;
 
     std::string encrypt(const std::string& message);
@@ -18,6 +21,9 @@ public:
 
 private:
     const bool replaceJI;
+    const bool keepDoubleLetters;
+    const char oddSuffixLetter;
+    const bool keepSpecialChars;
     char table[5][5];
 
 
