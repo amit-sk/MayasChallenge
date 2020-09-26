@@ -5,6 +5,7 @@
 #include "Communicator.hpp"
 #include "InitialVectorManager.hpp"
 #include "Decryptor.hpp"
+#include "DirectioningStringsDecryptor.hpp"
 
 class Challenger
 {
@@ -19,9 +20,13 @@ public:
     void run_challenge();
 
 private:
+    void execute_digits(const Buffer&);
+
+private:
     const WinSockUtils socket_enviroment;
     Communicator communicator;
     InitialVectorManager iv_manager;
-    MessageDecryptor decryptor;
+    MessageDecryptor message_decryptor;
+    DirectioningStringsDecryptor directioning_strings_decryptor;
 };
 
