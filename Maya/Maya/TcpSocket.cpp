@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <system_error>
 #include <array>
-#include <iostream> // TODO remove
 #include "TcpSocket.hpp"
 
 
@@ -29,9 +28,6 @@ void TcpClientSocket::connect_to_server(const std::string& ip, uint32_t port)
     {
         throw std::system_error(std::error_code(errno, std::system_category()), "Failed to connect.");
     }
-
-    // TODO remove
-    std::cout << "Connected" << std::endl;
 }
 
 Buffer TcpClientSocket::recv(size_t size)

@@ -1,11 +1,12 @@
 #include "pch.h"
 #include <cstring>
+#include <fstream>
 #include "Decryptor.hpp"
 
 
 MessageDecryptor::MessageDecryptor() :
     decryptor(128),
-    message_file(MESSAGE_FILE_NAME)
+    message_file(MESSAGE_FILE_NAME, std::ios::in | std::ios::binary)
 {}
 
 Buffer MessageDecryptor::read_message()

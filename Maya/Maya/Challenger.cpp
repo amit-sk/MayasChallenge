@@ -2,6 +2,7 @@
 #include "File.hpp"
 #include "AES.hpp"
 #include "Challenger.hpp"
+#include "Modifiers.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -18,23 +19,30 @@ Challenger::Challenger() :
 void Challenger::run_challenge()
 {
     Buffer key_digits = communicator.get_key_from_server();
-    iv_manager.modify_iv(key_digits);
     execute_digits(key_digits);
-    InitialVectorType iv = iv_manager.get_initial_vector();
 
+    InitialVectorType iv = iv_manager.get_initial_vector();
     Buffer decrypted_message = message_decryptor.decrypt_message(iv, key_digits);
 
-    std::ofstream f("DecryptedMessage.txt", std::ios::binary); // TODO wrap nicely
-    f.write(reinterpret_cast<char*>(decrypted_message.data()), decrypted_message.size());
+    File message_file("DecryptedMessage.txt", std::ios::out | std::ios::binary);
+    message_file.write(decrypted_message);
 }
 
 void Challenger::execute_digits(const Buffer& key_digits)
 {
-    for (size_t i = 0; i < key_digits.size() - 1; i+=2)
+    try
     {
-        iv_manager.modify_iv(key_digits.at(i));
-        iv_manager.modify_iv(key_digits.at(i + 1));
-        uint8_t entire_byte = (key_digits.at(i) * 10) + key_digits.at(i + 1);
-        std::cout << directioning_strings_decryptor.decrypt_directioning_string(i/2, entire_byte) << std::endl;
+        for (size_t i = 0; i < key_digits.size() - 1; i+=2)
+        {
+            uint8_t first_digit = key_digits.at(i);
+            uint8_t second_digit = key_digits.at(i + 1);
+            uint8_t entire_byte = (first_digit * 10) + second_digit;
+
+            std::cout << directioning_strings_decryptor.decrypt_directioning_string(i/2, entire_byte) << std::endl;
+            iv_manager.modify_iv(first_digit);
+            iv_manager.modify_iv(second_digit);
+        }
     }
+    catch (const Halt& _)
+    {}
 }
