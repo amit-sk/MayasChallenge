@@ -1,10 +1,9 @@
 #include "pch.h"
+#include <iostream>
 #include "File.hpp"
 #include "AES.hpp"
 #include "Challenger.hpp"
 #include "Modifiers.hpp"
-
-#include <iostream>
 
 
 Challenger::Challenger() :
