@@ -97,6 +97,7 @@
     <ClInclude Include="Challenger.hpp" />
     <ClInclude Include="Communicator.hpp" />
     <ClInclude Include="Decryptor.hpp" />
+    <ClInclude Include="DirectioningStringsDecryptor.hpp" />
     <ClInclude Include="File.hpp" />
     <ClInclude Include="InitialVectorManager.hpp" />
     <ClInclude Include="Modifiers.hpp" />
@@ -112,6 +113,7 @@
     <ClCompile Include="Challenger.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="Decryptor.cpp" />
+    <ClCompile Include="DirectioningStringsDecryptor.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="InitialVectorManager.cpp" />
     <ClCompile Include="Modifiers.cpp" />

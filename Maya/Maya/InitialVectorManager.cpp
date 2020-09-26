@@ -31,6 +31,11 @@ InitialVectorType InitialVectorManager::get_initial_vector() const
     return initial_vector;
 }
 
+void InitialVectorManager::modify_iv(uint8_t modifier)
+{
+    modifiers.at(modifier)(initial_vector);
+}
+
 void InitialVectorManager::modify_iv(Buffer modifiers)
 {
     try

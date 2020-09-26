@@ -10,6 +10,7 @@ public:
     InitialVectorManager();
     virtual ~InitialVectorManager() = default;
 
+    void modify_iv(uint8_t modifier);
     void modify_iv(Buffer modifiers);
 
     InitialVectorType  get_initial_vector() const;
