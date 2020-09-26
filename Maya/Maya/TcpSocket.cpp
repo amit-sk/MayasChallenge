@@ -2,7 +2,7 @@
 #include <WinSock2.h>
 #include <ws2tcpip.h>
 #include <stdio.h>
-#include <stdexcept>
+#include <system_error>
 #include <array>
 #include <iostream> // TODO remove
 #include "TcpSocket.hpp"
